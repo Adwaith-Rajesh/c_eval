@@ -56,3 +56,6 @@ tmp/
 build/
 test/
 out/
+.vscode/
+nobuild
+nobuild.old
