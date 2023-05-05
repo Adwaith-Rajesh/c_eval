@@ -20,6 +20,7 @@ LinkedList *ll_init() {
     LinkedList *new_list = malloc(sizeof(LinkedList));
     new_list->head = NULL;
     new_list->size = 0;
+    return new_list;
 }
 
 void ll_print(LinkedList *list, NodePrinterFn *node_printer) {
@@ -107,20 +108,20 @@ void ll_free(LinkedList *list) {
     free(list);
 }
 
-// LLIter *ll_iter_init(LinkedList *list) {
-//     LLIter *new_iter = malloc(sizeof(LLIter));
-//     new_iter->curr = list->head;
-//     return new_iter;
-// }
+LLIter *ll_iter_init(LinkedList *list) {
+    LLIter *new_iter = malloc(sizeof(LLIter));
+    new_iter->curr = list->head;
+    return new_iter;
+}
 
-// Node *ll_iter_next(LLIter *iterator) {
-//     if (iterator->curr == NULL) return NULL;
-//     Node *curr_val = iterator->curr;
-//     iterator->curr = iterator->curr->next;
-//     return curr_val;
-// }
+Node *ll_iter_next(LLIter *iterator) {
+    if (iterator->curr == NULL) return NULL;
+    Node *curr_val = iterator->curr;
+    iterator->curr = iterator->curr->next;
+    return curr_val;
+}
 
-// void ll_iter_free(LLIter *iterator) {
-//     if (iterator == NULL) return;
-//     free(iterator);
-// }
+void ll_iter_free(LLIter *iterator) {
+    if (iterator == NULL) return;
+    free(iterator);
+}

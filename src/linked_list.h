@@ -13,9 +13,9 @@ typedef struct {
     size_t size;
 } LinkedList;
 
-// typedef struct {
-//     Node *curr;
-// } LLIter;
+typedef struct {
+    Node *curr;
+} LLIter;
 
 typedef void NodePrinterFn(Node *);
 
@@ -32,8 +32,8 @@ Node *ll_pop_left(LinkedList *);
 
 void ll_empty(LinkedList *);
 void ll_free(LinkedList *);
-// LLIter *ll_iter_init(LinkedList *);
-// void ll_iter_free(LLIter *);
-// Node *ll_iter_next(LLIter *);
+LLIter *ll_iter_init(LinkedList *);
+void ll_iter_free(LLIter *);
+Node *ll_iter_next(LLIter *);
 
 #endif
