@@ -67,7 +67,34 @@ Node *ll_pop(LinkedList *list) {
     return curr;
 }
 
+void ll_append_left(LinkedList *list, Node *node) {
+    if (list->head == NULL) {
+        list->head = node;
+        list->size++;
+        return;
+    }
+    node->next = list->head;
+    list->head = node;
+    list->size++;
+}
+
+Node *ll_pop_left(LinkedList *list) {
+    if (list->head == NULL) return NULL;
+    Node *temp = list->head;
+    list->head = list->head->next;
+    list->size--;
+    return temp;
+}
+
 void ll_empty(LinkedList *list) {
+    Node *temp;
+    while (list->head != NULL) {
+        temp = list->head;
+        list->head = list->head->next;
+        free_node(temp);
+    }
+    list->head = NULL;
+    list->size = 0;
 }
 
 void ll_free(LinkedList *list) {
