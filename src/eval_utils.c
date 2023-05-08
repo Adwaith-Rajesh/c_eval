@@ -41,3 +41,10 @@ void display_tree_node(TreeNode *node) {
         exit(1);
     }
 }
+
+void free_tree_node(TreeNode *node) {
+    if (node == NULL) return;
+    if (node->data == NULL) return;
+    free(node->data);
+    free(node);
+}

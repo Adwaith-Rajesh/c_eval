@@ -125,3 +125,11 @@ void ll_iter_free(LLIter *iterator) {
     if (iterator == NULL) return;
     free(iterator);
 }
+
+void ll_map(LinkedList *list, LinkedListMapFn *fn) {
+    Node *temp = list->head;
+    while (temp != NULL) {
+        temp->data = fn(temp);
+        temp = temp->next;
+    }
+}

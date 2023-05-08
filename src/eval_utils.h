@@ -35,6 +35,6 @@ TreeNode *_create_float_tree_node(double);
 TreeNode *_create_string_tree_node(char *);
 
 void display_tree_node(TreeNode *);
-
+void free_tree_node(TreeNode *);
 
 #endif
