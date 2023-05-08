@@ -1,6 +1,8 @@
 #ifndef _EVAL_UTILS_H
 #define _EVAL_UTILS_H
 
+#include "linked_list.h"
+
 // clang-format off
 #define create_tree_node(data) ({               \
     _Generic(data,                              \
@@ -31,10 +33,25 @@ typedef struct TreeNode {
     struct TreeNode *right;
 } TreeNode;
 
+typedef struct {
+    LinkedList *list;
+    Node *top;
+} LinkedStack;
+
+typedef void StackItemPrinterFn (void *);
+
 TreeNode *_create_float_tree_node(double);
 TreeNode *_create_string_tree_node(char *);
 
 void display_tree_node(TreeNode *);
 void free_tree_node(TreeNode *);
+
+LinkedStack *ls_init();
+void ls_push(LinkedStack *, void *);
+void *ls_pop(LinkedStack *);
+void *ls_peek(LinkedStack *);
+int ls_is_empty(LinkedStack *);
+void ls_print(LinkedStack *, StackItemPrinterFn *);
+void ls_free(LinkedStack *);
 
 #endif

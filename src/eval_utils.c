@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "linked_list.h"
+
 TreeNode *_create_float_tree_node(double val) {
     TreeNode *new_tree_node = malloc(sizeof(TreeNode));
     TreeNodeData *new_tree_node_data = malloc(sizeof(TreeNodeData));
@@ -47,4 +49,52 @@ void free_tree_node(TreeNode *node) {
     if (node->data == NULL) return;
     free(node->data);
     free(node);
+}
+
+LinkedStack *ls_init() {
+    LinkedList *new_ll = ll_init();
+    LinkedStack *new_ls = malloc(sizeof(LinkedStack));
+    new_ls->list = new_ll;
+    new_ls->top = NULL;
+    return new_ls;
+}
+
+void ls_push(LinkedStack *stack, void *data) {
+    Node *new_node = create_node(data);
+    stack->top = new_node;
+    ll_append_left(stack->list, new_node);
+}
+
+void *ls_pop(LinkedStack *stack) {
+    Node *node = ll_pop_left(stack->list);
+    stack->top = stack->list->head;
+
+    if (node == NULL) return NULL;
+    void *v_p = node->data;
+    free_node(node);
+    return v_p;
+}
+
+void *ls_peek(LinkedStack *stack) {
+    if (stack->top == NULL) return NULL;
+    return stack->top->data;
+}
+
+int ls_is_empty(LinkedStack *stack) {
+    return ll_is_empty(stack->list);
+}
+
+void ls_print(LinkedStack *stack, StackItemPrinterFn *fn) {
+    // could not find an easy way to do it.
+    // w/o iterating the list myself
+    Node *temp = stack->list->head;
+    while (temp != NULL) {
+        fn(temp->data);
+        temp = temp->next;
+    }
+}
+
+void ls_free(LinkedStack *stack) {
+    ll_free(stack->list);
+    free(stack);
 }
