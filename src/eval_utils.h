@@ -61,8 +61,10 @@ void ls_print(LinkedStack *, StackItemPrinterFn *);
 void ls_free(LinkedStack *);
 
 String *string_create(size_t);
+String *string_create_from_char_p(char *, size_t);
 void string_destroy(String *);
 void string_append_char(String *, char);
 void string_print(String *);
+LinkedList *string_split_on_char_p(String *, const char *);
 
 #endif

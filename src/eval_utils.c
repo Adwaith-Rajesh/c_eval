@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "linked_list.h"
 
@@ -113,10 +114,8 @@ String *string_create(size_t size) {
 void string_destroy(String *string) {
     if (string == NULL) return;
     if (string->_str != NULL) {
-        printf("in if\n");
         free(string->_str);
     }
-    printf("outside\n");
     free(string);
 }
 
@@ -131,4 +130,23 @@ void string_append_char(String *string, char ch) {
 void string_print(String *string) {
     if (string == NULL) return;
     printf("%s", string->_str);
+}
+
+String *string_create_from_char_p(char *str, size_t size) {
+    String *new_string = string_create(size + 1);
+    size_t i = 0;
+    while (str[i] != '\0') {
+        string_append_char(new_string, str[i++]);
+    }
+    return new_string;
+}
+
+LinkedList *string_split_on_char_p(String *string, const char *ch) {
+    LinkedList *strings = ll_init();
+    char *token = strtok(string->_str, ch);
+    while (token != NULL) {
+        ll_append(strings, create_node(string_create_from_char_p(token, strlen(token))));
+        token = strtok(NULL, ch);
+    }
+    return strings;
 }
