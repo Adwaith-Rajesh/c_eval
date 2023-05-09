@@ -4,9 +4,9 @@ An overly complicated expression evaluation in C.
 
 My fist attempt at making a proper C project
 
-### WHy ?
+### Why ?
 
-Why Not?. I'm bored, I've nothing to do. And a project like is one hell of a learning experience.
+Why Not?. I'm bored, I've nothing to do. And a project like this is one hell of a learning experience.
 
 ### Build and Run
 
