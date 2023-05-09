@@ -66,8 +66,11 @@ void display_tree_node(TreeNode *node) {
 
 void free_tree_node(TreeNode *node) {
     if (node == NULL) return;
-    if (node->data == NULL) return;
-    free(node->data);
+    free_tree_node(node->left);
+    free_tree_node(node->right);
+
+    if (node->data != NULL)
+        free(node->data);
     free(node);
 }
 
