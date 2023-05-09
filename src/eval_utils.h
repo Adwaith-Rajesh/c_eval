@@ -7,7 +7,8 @@
 #define create_tree_node(data) ({               \
     _Generic(data,                              \
         double: _create_float_tree_node,        \
-        char*: _create_string_tree_node         \
+        char*: _create_char_p_tree_node,        \
+        String*: _create_string_tree_node       \
     )(data);                                    \
 })
 
@@ -15,14 +16,16 @@
 
 typedef enum {
     FLOAT,
+    CHAR_P,
     STRING
 } TreeNodeDataType;
 
 typedef struct TreeNodeData {
     // the node can store a char * or float
     // this struct just makes it easier to do thing
-    char *string_val;
+    char *char_p_val;
     double float_val;
+    struct String *string_val;
     TreeNodeDataType type;
 
 } TreeNodeData;
@@ -40,14 +43,15 @@ typedef struct {
 
 typedef void StackItemPrinterFn (void *);
 
-typedef struct {
+typedef struct String{
     char *_str;
     size_t curr_p;  // index where the next char will be inserted
     size_t cap;
 } String;
 
 TreeNode *_create_float_tree_node(double);
-TreeNode *_create_string_tree_node(char *);
+TreeNode *_create_char_p_tree_node(char *);
+TreeNode *_create_string_tree_node(String *);
 
 void display_tree_node(TreeNode *);
 void free_tree_node(TreeNode *);
