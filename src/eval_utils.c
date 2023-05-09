@@ -150,3 +150,7 @@ LinkedList *string_split_on_char_p(String *string, const char *ch) {
     }
     return strings;
 }
+
+int string_n_cmp_char_p(String *string, const char *ch, size_t n) {
+    return strncmp(string->_str, ch, n);
+}

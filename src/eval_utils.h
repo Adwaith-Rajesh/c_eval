@@ -66,5 +66,6 @@ void string_destroy(String *);
 void string_append_char(String *, char);
 void string_print(String *);
 LinkedList *string_split_on_char_p(String *, const char *);
+int string_n_cmp_char_p(String *, const char *, size_t);
 
 #endif
