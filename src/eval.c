@@ -1,6 +1,7 @@
 // where everything related to evaluation actually happens
 #include "eval.h"
 
+#include <math.h>
 #include <stdarg.h>
 #include <stdlib.h>
 #include <string.h>
@@ -127,6 +128,14 @@ TreeNode *postfix_list_to_expression_tree(LinkedList *p_expr) {
     TreeNode *tree_node = (TreeNode *)(ls_pop(stack));
     ls_free(stack);
     return tree_node;
+}
+
+static double _compute(String *opr, double a, double b) {
+    if (string_n_cmp_char_p(opr, "*", 1) == 0) return a * b;
+    if (string_n_cmp_char_p(opr, "/", 1) == 0) return a / b;
+    if (string_n_cmp_char_p(opr, "+", 1) == 0) return a + b;
+    if (string_n_cmp_char_p(opr, "-", 1) == 0) return a - b;
+    if (string_n_cmp_char_p(opr, "^", 1) == 0) return pow(a, b);
 }
 
 // end expression tree stuff

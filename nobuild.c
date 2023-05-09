@@ -45,7 +45,8 @@ void build_main() {
         PATH("src", "main.c"),
         PATH("build", "out", "eval_utils.o"),
         PATH("build", "out", "eval.o"),
-        "-lll");
+        "-lll",
+        "-lm");
 }
 
 int main(int argc, char **argv) {
