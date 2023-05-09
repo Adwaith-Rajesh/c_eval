@@ -98,3 +98,37 @@ void ls_free(LinkedStack *stack) {
     ll_free(stack->list);
     free(stack);
 }
+
+String *string_create(size_t size) {
+    if (size < 1) return NULL;
+
+    String *new_string = malloc(sizeof(String));
+    new_string->_str = malloc(sizeof(char) * size);
+    new_string->_str[0] = '\0';
+    new_string->curr_p = 0;
+    new_string->cap = size;
+    return new_string;
+}
+
+void string_destroy(String *string) {
+    if (string == NULL) return;
+    if (string->_str != NULL) {
+        printf("in if\n");
+        free(string->_str);
+    }
+    printf("outside\n");
+    free(string);
+}
+
+void string_append_char(String *string, char ch) {
+    if (string->curr_p < string->cap - 1) {
+        string->_str[string->curr_p] = ch;
+        string->_str[++string->curr_p] = '\0';
+        return;
+    }
+}
+
+void string_print(String *string) {
+    if (string == NULL) return;
+    printf("%s", string->_str);
+}

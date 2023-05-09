@@ -40,6 +40,12 @@ typedef struct {
 
 typedef void StackItemPrinterFn (void *);
 
+typedef struct {
+    char *_str;
+    size_t curr_p;  // index where the next char will be inserted
+    size_t cap;
+} String;
+
 TreeNode *_create_float_tree_node(double);
 TreeNode *_create_string_tree_node(char *);
 
@@ -53,5 +59,10 @@ void *ls_peek(LinkedStack *);
 int ls_is_empty(LinkedStack *);
 void ls_print(LinkedStack *, StackItemPrinterFn *);
 void ls_free(LinkedStack *);
+
+String *string_create(size_t);
+void string_destroy(String *);
+void string_append_char(String *, char);
+void string_print(String *);
 
 #endif
