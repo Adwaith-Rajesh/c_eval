@@ -1,5 +1,6 @@
 #include "linked_list.h"
 
+#include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -126,10 +127,13 @@ void ll_iter_free(LLIter *iterator) {
     free(iterator);
 }
 
-void ll_map(LinkedList *list, LinkedListMapFn *fn) {
+void ll_map(LinkedList *list, LinkedListMapFn *fn, ...) {
     Node *temp = list->head;
+    va_list args;
+    va_start(args, fn);
     while (temp != NULL) {
-        temp->data = fn(temp);
+        temp->data = fn(temp, args);
         temp = temp->next;
     }
+    va_end(args);
 }

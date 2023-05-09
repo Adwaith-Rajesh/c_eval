@@ -1,6 +1,7 @@
 #ifndef _LINKED_LIST_H
 #define _LINKED_LIST_H
 
+#include <stdarg.h>
 #include <stdio.h>
 
 typedef struct Node {
@@ -18,7 +19,7 @@ typedef struct {
 } LLIter;
 
 typedef void NodePrinterFn(Node *);
-typedef void *LinkedListMapFn(Node *);
+typedef void *LinkedListMapFn(Node *, va_list);
 
 Node *create_node(void *);
 void free_node(Node *);
@@ -30,7 +31,7 @@ void ll_append(LinkedList *, Node *);
 Node *ll_pop(LinkedList *);
 void ll_append_left(LinkedList *, Node *);
 Node *ll_pop_left(LinkedList *);
-void ll_map(LinkedList *, LinkedListMapFn *);
+void ll_map(LinkedList *, LinkedListMapFn *, ...);
 void ll_empty(LinkedList *);
 void ll_free(LinkedList *);
 LLIter *ll_iter_init(LinkedList *);
