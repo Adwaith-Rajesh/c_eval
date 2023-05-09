@@ -29,7 +29,19 @@ static int _prec(String *str) {
     return -1;
 }
 
-void *_infix_to_postfix(Node *node, va_list args) {
+static int _is_operator(String *str) {
+    if (
+        (string_n_cmp_char_p(str, "^", 1) == 0) ||
+        (string_n_cmp_char_p(str, "*", 1) == 0) ||
+        (string_n_cmp_char_p(str, "/", 1) == 0) ||
+        (string_n_cmp_char_p(str, "+", 1) == 0) ||
+        (string_n_cmp_char_p(str, "-", 1) == 0) ||
+        (string_n_cmp_char_p(str, "(", 1) == 0) ||
+        (string_n_cmp_char_p(str, ")", 1) == 0)) return 1;
+    return 0;
+}
+
+static void *_infix_to_postfix(Node *node, va_list args) {
     va_list args_copy;
     va_copy(args_copy, args);
 
@@ -78,3 +90,43 @@ LinkedList *infix_to_postfix_list(String *exp) {
 }
 
 // end infix to postfix
+
+// The expression tree stuff
+
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wpedantic"
+static void *_pl_to_et(Node *node, va_list args) {
+    va_list args_copy;
+    va_copy(args_copy, args);
+
+    Stack *stack = va_arg(args_copy, Stack *);
+
+    String *token = STRING_P(node->data);
+    TreeNode *tree_node;
+
+    if (_is_operator(token)) {
+        tree_node = create_tree_node(token);
+        tree_node->right = (TreeNode *)(ls_pop(stack));
+        tree_node->left = (TreeNode *)(ls_pop(stack));
+        ls_push(stack, tree_node);
+    } else {
+        if (_is_float(token)) {
+            ls_push(stack, create_tree_node(strtod(token->_str, NULL)));
+        } else {
+            fprintf(stderr, "Something went wrong while making expression tree\n");
+            exit(1);
+        }
+    }
+    return node->data;
+}
+#pragma GCC diagnostic pop
+
+TreeNode *postfix_list_to_expression_tree(LinkedList *p_expr) {
+    Stack *stack = ls_init();
+    ll_map(p_expr, _pl_to_et, stack);
+    TreeNode *tree_node = (TreeNode *)(ls_pop(stack));
+    ls_free(stack);
+    return tree_node;
+}
+
+// end expression tree stuff

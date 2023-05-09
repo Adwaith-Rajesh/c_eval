@@ -11,7 +11,7 @@
 
 typedef LinkedStack Stack;
 
-void *_infix_to_postfix(Node *, va_list);
 LinkedList *infix_to_postfix_list(String *);
+TreeNode *postfix_list_to_expression_tree(LinkedList *);
 
 #endif
