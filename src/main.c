@@ -51,9 +51,10 @@ int main(int argc, char **argv) {
     string_destroy(exp);
 
     ll_print(p_list, _test_node_printer);
+    printf("\n");
+    printf("%lf", evaluate_expression_tree(tree_node));
 
     ll_map(p_list, _test_free_postfix_list);
-
     ll_free(p_list);
     free_tree_node(tree_node);
 

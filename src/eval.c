@@ -136,6 +136,20 @@ static double _compute(String *opr, double a, double b) {
     if (string_n_cmp_char_p(opr, "+", 1) == 0) return a + b;
     if (string_n_cmp_char_p(opr, "-", 1) == 0) return a - b;
     if (string_n_cmp_char_p(opr, "^", 1) == 0) return pow(a, b);
+    return 0.0;
+}
+
+double evaluate_expression_tree(TreeNode *root) {
+    if (root == NULL) return 0.0;
+
+    if (root->left == NULL && root->right == NULL && root->data->type == FLOAT) {
+        return root->data->float_val;
+    }
+
+    double a = evaluate_expression_tree(root->left);
+    double b = evaluate_expression_tree(root->right);
+
+    return _compute(root->data->string_val, a, b);
 }
 
 // end expression tree stuff

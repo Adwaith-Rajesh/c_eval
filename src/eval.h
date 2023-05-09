@@ -13,5 +13,6 @@ typedef LinkedStack Stack;
 
 LinkedList *infix_to_postfix_list(String *);
 TreeNode *postfix_list_to_expression_tree(LinkedList *);
+double evaluate_expression_tree(TreeNode *);
 
 #endif
