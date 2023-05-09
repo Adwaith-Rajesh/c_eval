@@ -11,7 +11,7 @@
 // infix to postfix conversion and related functions
 
 // https://stackoverflow.com/a/45555413/14617085
-static int test_float(String *string) {
+static int _is_float(String *string) {
     int len;
     float dummy = 0.0;
     if (sscanf(string->_str, "%f %n", &dummy, &len) == 1 && len == (int)strlen(string->_str))
@@ -20,22 +20,13 @@ static int test_float(String *string) {
         return 0;
 }
 
-static int prec(String *str) {
+static int _prec(String *str) {
     if (string_n_cmp_char_p(str, "^", 1) == 0) return 3;
     if ((string_n_cmp_char_p(str, "*", 1) == 0) ||
         (string_n_cmp_char_p(str, "/", 1) == 0)) return 2;
     if ((string_n_cmp_char_p(str, "+", 1) == 0) ||
         (string_n_cmp_char_p(str, "-", 1) == 0)) return 1;
     return -1;
-}
-
-void *_test_free_stirng_from_tokens(Node *node, va_list args) {
-    string_destroy(STRING_P(node->data));
-    return NULL;
-}
-
-void _test_p_list_printer(Node *node) {
-    string_print(STRING_P(node->data));
 }
 
 void *_infix_to_postfix(Node *node, va_list args) {
@@ -47,7 +38,7 @@ void *_infix_to_postfix(Node *node, va_list args) {
 
     String *str = STRING_P(node->data);
 
-    if (test_float(str)) {
+    if (_is_float(str)) {
         ll_append(p_list, create_node(str));
     } else if (string_n_cmp_char_p(str, "(", 1) == 0) {
         ls_push(stack, str);
@@ -57,11 +48,11 @@ void *_infix_to_postfix(Node *node, va_list args) {
         }
         ls_pop(stack);  // get rid of (
     } else {            // we have an operator
-        if (!ls_is_empty(stack) && prec(str) == 3 && prec(STRING_P(ls_peek(stack))) == 3) {
+        if (!ls_is_empty(stack) && _prec(str) == 3 && _prec(STRING_P(ls_peek(stack))) == 3) {
             ls_push(stack, str);
             return node->data;
         }
-        while (!ls_is_empty(stack) && (prec(str) <= prec(STRING_P(ls_peek(stack))))) {
+        while (!ls_is_empty(stack) && (_prec(str) <= _prec(STRING_P(ls_peek(stack))))) {
             ll_append(p_list, create_node(ls_pop(stack)));
         }
         ls_push(stack, str);
