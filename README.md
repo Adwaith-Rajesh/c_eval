@@ -2,7 +2,7 @@
 
 An overly complicated expression evaluation in C.
 
-My fist attempt at making a proper C project
+My first attempt at making a proper C project
 
 ### Why ?
 
